@@ -42,3 +42,14 @@ import { nanoid } from '@reduxjs/toolkit'
 ```
 
 For now i think this implementation should work.
+
+#### Lessons Learnt from Phase 1
+
+- cloneNode() does not copy the event listeners, which is a good thing! [(see reference)](https://stackoverflow.com/questions/15408394/how-to-copy-a-dom-node-with-event-listeners)
+- In order to make a cleaner design we cannot wrap the "components" of the left drawer directly with the React Material-UI Components.
+Instead we will need to handle the rendering of the component in a seperate logic. This way it can also be analogous of the front-end framework!
+- createDocumentFragment() creates a new empty DocumentFragment into which DOM nodes can be added to build an offscreen DOM tree.
+- createElementNS creates an element with the specified namespace URI and qualified name. (This is not relevant in our approach to use material-ui)
+- We should includ Grid container and Grid item components, a widely used layout components.
+- We can make use of a hierarchical data tree of components and their IDs in the state to easily target elements w.r.t their IDs. And edit any css on the fly of each action.
+- TODO: finalized on the display and position standard strategy.

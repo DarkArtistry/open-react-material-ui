@@ -23,12 +23,9 @@ function UserApp() {
     console.log('handleDrop');
     ev.preventDefault();
     ev.stopPropagation();
-    let text = ev.dataTransfer.getData("text/plain");
-    console.log('text : ', text);
     let html = ev.dataTransfer.getData("text/html");
-    console.log('html : ', html);
     ev.currentTarget.style.border = "none";
-    console.log(ev.currentTarget);
+    let text = ev.dataTransfer.getData("text/plain");
     let element = document.getElementById(text)
     let element_prime = element.cloneNode(true)
     ev.currentTarget.append(element_prime)
