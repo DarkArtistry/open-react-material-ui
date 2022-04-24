@@ -52,4 +52,7 @@ Instead we will need to handle the rendering of the component in a seperate logi
 - createElementNS creates an element with the specified namespace URI and qualified name. (This is not relevant in our approach to use material-ui)
 - We should includ Grid container and Grid item components, a widely used layout components.
 - We can make use of a hierarchical data tree of components and their IDs in the state to easily target elements w.r.t their IDs. And edit any css on the fly of each action.
-- TODO: finalized on the display and position standard strategy.
+- Decided to allow relative and abosulute position strategies, adjustment of display will be secondary as we have Grid strategies, we need to allow float. [(see reference)](https://medium.com/@mautayro/understanding-css-position-display-float-87f9727334b2) 
+- Upon cloning the component, and before appending it into the dropzone, we will addEventListener, drag, handleDrag. handleDrag will get the element's rect properties, ev.target.getBoundingClientRect(), and ev.target.parentNode.getBoundingClientRect(). This will allow us to drag the component and reposition itself on the fly.
+- Thereafter we can set the left and top properties of the target element with this: const coordinates = [parent.left - rect.left, parent.top - rect.top];
+- We MIGHT need to work on some highlighting and additional wrapping divs to "pretend" they are paddings.

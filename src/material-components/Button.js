@@ -24,7 +24,7 @@ const MaterialBtn = () => {
                 draggable={"true"} 
                 onDragStart={handleDragStart}
             >
-                {/* <Button
+                <Button
                     id={nanoid()}
                     href={href}
                     color={color}
@@ -34,7 +34,7 @@ const MaterialBtn = () => {
                     onClick={()=> console.log('hello')}
                 >
                     {content}
-                </Button> */}
+                </Button>
             </span>
     );
 }

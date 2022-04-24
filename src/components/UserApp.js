@@ -19,6 +19,16 @@ function UserApp() {
     ev.preventDefault();
   }
 
+  const handleDrag = (ev) => {
+    console.log(ev.target);
+    let rect = ev.target.getBoundingClientRect();
+    let parentRect = ev.target.parentNode.getBoundingClientRect()
+    console.log('rect: ', rect);
+    console.log('parentRect: ', parentRect);
+    console.log('element_prime position: ', ev.target.position);
+    console.log('element_prime.parent: ', ev.target.parentNode);
+  }
+
   const handleDrop = (ev) => {
     console.log('handleDrop');
     ev.preventDefault();
@@ -28,6 +38,7 @@ function UserApp() {
     let text = ev.dataTransfer.getData("text/plain");
     let element = document.getElementById(text)
     let element_prime = element.cloneNode(true)
+    element_prime.addEventListener('drag', handleDrag)
     ev.currentTarget.append(element_prime)
   }
 
