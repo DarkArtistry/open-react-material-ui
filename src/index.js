@@ -5,14 +5,18 @@ import App from './containers/App';
 import configureStore from './app/configureStore';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const store = configureStore({ })
+const store = configureStore({ components: {} })
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+      <Provider store={store}>
+          <DndProvider backend={HTML5Backend}>
+            <App />
+          </DndProvider>
+      </Provider>
   </React.StrictMode>
 );
 

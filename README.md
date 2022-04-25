@@ -56,4 +56,4 @@ Instead we will need to handle the rendering of the component in a seperate logi
 - Upon cloning the component, and before appending it into the dropzone, we will addEventListener, drag, handleDrag. handleDrag will get the element's rect properties, ev.target.getBoundingClientRect(), and ev.target.parentNode.getBoundingClientRect(). This will allow us to drag the component and reposition itself on the fly.
 - Thereafter we can set the left and top properties of the target element with this: const coordinates = [parent.left - rect.left, parent.top - rect.top];
 - We MIGHT need to work on some highlighting and additional wrapping divs to "pretend" they are paddings.
-- Instead of immediately manupulating the react DOM we have to update the component tree state and render accordingly to the tree.
+- Instead of immediately manupulating the react DOM we have to update the component tree state and render accordingly to the tree. Therefore now it makes sense to completely make use of react-dnd.

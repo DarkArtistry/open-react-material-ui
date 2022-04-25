@@ -7,6 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import MaterialBtn from '../material-components/Button';
+import { nanoid } from '@reduxjs/toolkit'
 
 const LeftDrawer = () => {
     const drawerWidth = 250
@@ -26,7 +27,7 @@ const LeftDrawer = () => {
                         style={{padding: 0}}
                     >
                         <ListItem>
-                            <MaterialBtn />
+                            <MaterialBtn _id={nanoid()} />
                         </ListItem>
                     </List>
                 </Box>

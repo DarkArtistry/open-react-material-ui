@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-
+import components from './components'
 
 const mainApp = combineReducers({
-    // navDrawers,
+    components,
   })
 
 export default mainApp
