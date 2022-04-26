@@ -75,6 +75,6 @@ Instead we will need to handle the rendering of the component in a seperate logi
 
 ### Phase 1.1
 
-- Let's progress with using react-dnd AND make use of redux, global store, to store our JSON Tree Data. The JSON Tree Data will be used to render the elements recursively.
+- Let's progress with using [react-dnd](https://react-dnd.github.io/react-dnd/about)  AND make use of redux, global store, to store our JSON Tree Data. The JSON Tree Data will be used to render the elements recursively.
 - This is the react way of working, it is much cleaner and it easily constructs the tree, saving our hassle to query the DOM document and messing with classes and ids. Now we just have to render recusively. :)
 
