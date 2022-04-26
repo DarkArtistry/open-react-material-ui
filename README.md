@@ -11,6 +11,21 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 Users will be able to drag and drop material components on the left drawer to the dropzone (middle/user layout), and use the toolbox on the right drawer to edit the CSS of individual components in the dropzone. Finally with a click of the button, the platform will generate react/ react-material-ui code and also have the capability convert the xml structure to a json for various device purposes. Also, possibly becoming a library for people who want to build no code platforms.
 
+### Target Milestone
+- To achieve visual editing with components: buttons, icon buttons, Material icons, grid container, grid item, Accordion, Divider, Paper, Typography. ImageList components will be an over achievement.
+
+
+### To see this project grow.
+
+<b>Join us</b> and collaborate on this project
+OR
+<b>Donate</b> to us at:
+
+|   |Coin|NetWork|Address|
+|---|----|-------|-------|
+|<img src="https://s2.coinmarketcap.com/static/img/coins/200x200/825.png" width="50" height="50"> |USDT|BSC Network|0x81C2A19Ab37A48EB435CFe75c1ba42E3070517B1|
+|<img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Binance-coin-bnb-logo.png" width="50" height="50">|BNB|BSC Network|0x81C2A19Ab37A48EB435CFe75c1ba42E3070517B1|
+|<img src="https://d33wubrfki0l68.cloudfront.net/fcd4ecd90386aeb50a235ddc4f0063cfbb8a7b66/4295e/static/bfc04ac72981166c740b189463e1f74c/40129/eth-diamond-black-white.jpg" width="50" height="50">|ETH|ETH Network|0x81C2A19Ab37A48EB435CFe75c1ba42E3070517B1|
 
 ### Phase 1
 ![Phase 1](https://i.imgur.com/BOT2fg6.gif "Phase 1")
@@ -57,3 +72,9 @@ Instead we will need to handle the rendering of the component in a seperate logi
 - Thereafter we can set the left and top properties of the target element with this: const coordinates = [parent.left - rect.left, parent.top - rect.top];
 - We MIGHT need to work on some highlighting and additional wrapping divs to "pretend" they are paddings.
 - Instead of immediately manupulating the react DOM we have to update the component tree state and render accordingly to the tree. Therefore now it makes sense to completely make use of react-dnd.
+
+### Phase 1.1
+
+- Let's progress with using react-dnd AND make use of redux, global store, to store our JSON Tree Data. The JSON Tree Data will be used to render the elements recursively.
+- This is the react way of working, it is much cleaner and it easily constructs the tree, saving our hassle to query the DOM document and messing with classes and ids. Now we just have to render recusively. :)
+

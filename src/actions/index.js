@@ -1,5 +1,6 @@
-import { setRoot } from './components'
+import { setRoot, addComponent } from './components'
 
 export {
-    setRoot
+    setRoot,
+    addComponent
 }

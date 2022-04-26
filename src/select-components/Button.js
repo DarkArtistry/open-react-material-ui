@@ -5,7 +5,7 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { ComponentTypes } from './cTypes'
 
 const MaterialBtn = (props) => {
-    
+
     const { _id } = props
 
     const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
@@ -13,6 +13,20 @@ const MaterialBtn = (props) => {
         item: {
             type: ComponentTypes.BUTTON,
             id: _id,
+            variant: 'contained', // by default
+            size: 'medium', // by default
+            href: '', // by default
+            fullWidth: false, // by default
+            endIconType: '', // by default
+            startIconType: '', // by default
+            disableRipple: false, // by default
+            color: 'primary', // by default
+            children: '', // by default, the content of the component
+            classes: {}, // by default
+            disabled:  false, // by default
+            'droppable': false,
+            'draggable': true,
+            'rootParentType': null,
         },
         collect: monitor => {
             console.log('button monitor: ', monitor);
@@ -36,6 +50,7 @@ const MaterialBtn = (props) => {
                 cursor: 'move',
                 justifyContent: 'start'
             }}
+            color={'success'}
             fullWidth
             startIcon={<DragIndicatorIcon />}
         >Button</Button>) : (
@@ -44,7 +59,7 @@ const MaterialBtn = (props) => {
             style={{
                 opacity: 1,
                 cursor: 'move',
-                justifyContent: 'start'
+                justifyContent: 'start',
             }}
             fullWidth
             startIcon={<DragIndicatorIcon />}
