@@ -10,13 +10,18 @@ const MaterialBtn = (props) => {
     console.log('RENDER BUTTON COMPONENT!!!');
     const { 
         _id, type, variant, size, href, fullWidth, endIconType, startIconType,
-        disableRipple, color, children, disabled, droppable, draggable, isSelected, 
-        isHovered, rootParentType, selectComponent, selectedComponent
+        disableRipple, color, children, disabled, 
+        droppable, draggable, isSelected, isHovered, rootParentType, 
+        position, display, float, height, heightUnit, left, leftUnit, 
+        right, rightUnit, top, topUnit, bottom, bottomUnit, margin, marginUnit, padding, paddingUnit,
+        customisedColor,
+        selectComponent, selectedComponent
     } = props
 
     const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
         type: type,
         item: {
+            // material button props
             type: type,
             id: _id,
             variant: variant, // by default
@@ -29,6 +34,25 @@ const MaterialBtn = (props) => {
             color: color, // by default
             children: children, // by default, the content of the button component
             disabled:  disabled, // by default
+            // css props
+            position: position,
+            display: display,
+            float: float,
+            height: height,
+            heightUnit: heightUnit,
+            left: left,
+            leftUnit: leftUnit,
+            right: right,
+            rightUnit: rightUnit,
+            top: top,
+            topUnit: topUnit,
+            bottom: bottom,
+            bottomUnit: bottomUnit,
+            margin: margin,
+            marginUnit: marginUnit,
+            padding: padding,
+            paddingUnit: paddingUnit,
+            customisedColor: customisedColor,
             // notice that those stringified keys are the ones we make use of, while those above are the material-ui props for buttons
             'droppable': droppable,
             'draggable': draggable,
@@ -58,6 +82,18 @@ const MaterialBtn = (props) => {
                 opacity: 0.5,
                 cursor: 'move',
                 justifyContent: 'start',
+                position: position,
+                display: display,
+                float: float,
+                height: `${height + heightUnit}`,
+                left: `${left + leftUnit}`,
+                right: `${right + rightUnit}`,
+                top: `${top + topUnit}`,
+                bottom: `${bottom + bottomUnit}`,
+                margin: `${margin + marginUnit}`,
+                padding: `${padding + paddingUnit}`,
+                backgroundColor: `${(customisedColor && customisedColor.backgroundColor) || ""}`,
+                color: `${(customisedColor && customisedColor.color) || ""}`
             }}
             variant={variant}
             fullWidth={fullWidth}
@@ -66,15 +102,27 @@ const MaterialBtn = (props) => {
             // endIcon={endIconType}
             // startIcon={startIconType}
             disableRipple={disableRipple}
-            color={color}
+            color={color === 'customise' ? 'primary' : color}
             disabled={disabled}
-        >Button</Button>) : (
+        >{children || "Button"}</Button>) : (
             <Button
             ref={drag}
             style={{
                 opacity: 1,
                 cursor: 'move',
                 justifyContent: 'start',
+                position: position,
+                display: display,
+                float: float,
+                height: `${height + heightUnit}`,
+                left: `${left + leftUnit}`,
+                right: `${right + rightUnit}`,
+                top: `${top + topUnit}`,
+                bottom: `${bottom + bottomUnit}`,
+                margin: `${margin + marginUnit}`,
+                padding: `${padding + paddingUnit}`,
+                backgroundColor: `${color === 'customise' ? ((customisedColor && customisedColor.backgroundColor) || "") : ""}`,
+                color: `${color === 'customise' ? ((customisedColor && customisedColor.color) || "") : ""}`,
                 boxShadow: (selectedComponent && selectedComponent.id === _id ) ? '0 0 6px 3px #fff, 0 0 10px 6px #f0f, 0 0 14px 9px #0ff': '',
             }}
             variant={variant}
@@ -84,7 +132,7 @@ const MaterialBtn = (props) => {
             // endIcon={endIconType}
             // startIcon={startIconType}
             disableRipple={disableRipple}
-            color={color}
+            color={color === 'customise' ? 'primary' : color}
             disabled={disabled}
             onClick={(ev)=> {
                 ev.stopPropagation();
@@ -103,7 +151,7 @@ const MaterialBtn = (props) => {
                     disabled:  disabled,
                 })
             }}
-        >Button</Button>)
+        >{children || "Button"}</Button>)
     )
 }
 

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { setRoot, addComponent } from '../actions'
+import { updateSelectedComponent } from '../actions'
 import RightDrawer from '../components/RightDrawer'
 
 const mapStateToProps = state => ({
@@ -8,8 +8,7 @@ const mapStateToProps = state => ({
 })
   
 const mapDispatchToProps = dispatch => ({
-    // setRoot: (data) => dispatch(setRoot(data)),
-    // addComponent: (data) => dispatch(addComponent(data)),
+    updateSelectedComponent: (data) => dispatch(updateSelectedComponent(data)),
 })
 
 export default connect(

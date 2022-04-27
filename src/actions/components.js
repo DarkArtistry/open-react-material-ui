@@ -12,3 +12,8 @@ export const selectComponent = (data) => ({
     type: 'SELECT_COMPONENT',
     data: data
 })
+
+export const updateSelectedComponent = (data) => ({
+    type: 'UPDATE_SELECTED_COMPONENT',
+    data: data
+})

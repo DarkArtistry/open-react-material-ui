@@ -12,8 +12,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 Users will be able to drag and drop material components on the left drawer to the dropzone (middle/user layout), and use the toolbox on the right drawer to edit the CSS of individual components in the dropzone. Finally with a click of the button, the platform will generate react/ react-material-ui code and also have the capability convert the xml structure to a json for various device purposes. Also, possibly becoming a library for people who want to build no code platforms.
 
 ### Target Milestone
-- To achieve visual editing with components: buttons, icon buttons, Material icons, grid container, grid item, Accordion, Divider, Paper, Typography. ImageList components will be an over achievement.
-
+- To achieve visual editing with components: Buttons, Grid container, Grid item and Paper. Icon buttons, Material icons, Accordion, Divider, Typography and ImageList components will be an over achievement.
 
 ### To see this project grow.
 

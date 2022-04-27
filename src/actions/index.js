@@ -1,11 +1,13 @@
 import { 
     setRoot, 
     addComponent,
-    selectComponent
+    selectComponent,
+    updateSelectedComponent
 } from './components'
 
 export {
     setRoot,
     addComponent,
-    selectComponent
+    selectComponent,
+    updateSelectedComponent
 }

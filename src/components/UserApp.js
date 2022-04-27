@@ -74,8 +74,8 @@ function UserApp(props) {
               position: (components && components.root && components.root.position) || ''
             }}
             onClick={()=> {
-              selectComponent(components.root)}
-            }
+              // selectComponent(components.root)
+            }}
             ref={drop}
          >
            {components && components.root && components.root.children && components.root.children.map((singleComponentId) => {

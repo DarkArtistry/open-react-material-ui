@@ -5,7 +5,6 @@ function components(state ={}, action) {
       case 'SET_ROOT_COMPONENT':
           let init_root = {}
           const setRootComponentState = state.components ? JSON.parse(JSON.stringify(action.data)) : {}
-          console.log('setRootComponentState : ', setRootComponentState);
           init_root[setRootComponentState ? setRootComponentState.id : 'root'] = setRootComponentState
         return {
           ...state,
@@ -15,11 +14,9 @@ function components(state ={}, action) {
           let addComponentState = JSON.parse(JSON.stringify(state.components))
           let addComponentData = action.data ? JSON.parse(JSON.stringify(action.data)) : {}
           // add component into state components
-            addComponentData.id = nanoid() // generates new id
-            addComponentState[addComponentData.id] = addComponentData
+          addComponentData.id = nanoid() // generates new id
+          addComponentState[addComponentData.id] = addComponentData
           // add children into component's parent AND ensure that it is not an INFINITE LOOP
-          console.log('ADDING COMPONENT1');
-          console.log(addComponentData);
           if (addComponentData.parentId) {
             // Inifite loop check
             if (addComponentData.children && addComponentData.children.includes(addComponentData.parentId)) {
@@ -43,9 +40,21 @@ function components(state ={}, action) {
           components: addComponentState
         }
         case 'SELECT_COMPONENT':
+          console.log('selectedComponent : ', action.data);
           return {
             ...state,
             selectedComponent: action.data ? JSON.parse(JSON.stringify(action.data)) : {}
+          }
+        case 'UPDATE_SELECTED_COMPONENT':
+          let componentToUpdate = action.data ? JSON.parse(JSON.stringify(action.data)) : {}
+          let updateComponentState = JSON.parse(JSON.stringify(state.components))
+          updateComponentState[componentToUpdate.id] = componentToUpdate
+          console.log('componentToUpdate :', componentToUpdate);
+          console.log('selectedComponent :', state.selectedComponent);
+          return {
+            ...state,
+            selectedComponent: componentToUpdate,
+            components: updateComponentState
           }
       default:
         return state
