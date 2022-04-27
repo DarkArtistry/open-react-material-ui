@@ -17,18 +17,36 @@ function components(state ={}, action) {
           // add component into state components
             addComponentData.id = nanoid() // generates new id
             addComponentState[addComponentData.id] = addComponentData
-          // add children into component's parent
+          // add children into component's parent AND ensure that it is not an INFINITE LOOP
+          console.log('ADDING COMPONENT1');
+          console.log(addComponentData);
           if (addComponentData.parentId) {
+            // Inifite loop check
+            if (addComponentData.children && addComponentData.children.includes(addComponentData.parentId)) {
+              console.log('INFINITE LOOP DETECTED');
+              return {
+                ...state
+              }
+            }
             if(addComponentState[addComponentData.parentId].children) {
-              addComponentState[addComponentData.parentId].children.push(addComponentData)
+              console.log('have children');
+              addComponentState[addComponentData.parentId].children.push(addComponentData.id)
             } else {
-              addComponentState[addComponentData.parentId].children = [addComponentData]
+              console.log('no children');
+              addComponentState[addComponentData.parentId].children = [addComponentData.id]
             }
           }
+          console.log('ADDING COMPONENT2');
+          console.log(addComponentState);
         return {
           ...state,
           components: addComponentState
         }
+        case 'SELECT_COMPONENT':
+          return {
+            ...state,
+            selectedComponent: action.data ? JSON.parse(JSON.stringify(action.data)) : {}
+          }
       default:
         return state
     }

@@ -16,8 +16,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-const RightDrawer = () => {
-    const drawerWidth = 250
+import { cssForms } from '../utils/components'
+
+const RightDrawer = (props) => {
+    const { selectedComponent } = props
+    const drawerWidth = 350
+    const [form, setForm] = useState({});
+
+    useEffect(()=> {
+        if (selectedComponent) {
+            let componentForm = cssForms(selectedComponent)
+            setForm(componentForm)
+        }
+      },[(selectedComponent && selectedComponent.id) || ""])
   return (
         <Drawer
             anchor={'right'}
@@ -25,32 +36,18 @@ const RightDrawer = () => {
             variant={'permanent'}
         >
             <Box
-                sx={{ width: drawerWidth }}
+                sx={{ width: drawerWidth, textOverflow: 'ellipsis' }}
                 role="presentation"
             >
                 <Toolbar>Toolbox</Toolbar>
                 <Divider />
-                {/* <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>
-                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                        </ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                    ))}
-                </List>
-                <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>
-                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                        </ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                    ))}
-                </List> */}
+                {
+                    selectedComponent && selectedComponent.id && Object.keys(selectedComponent).map((eachKey) => {
+                        return <div><b>{eachKey}</b>: {selectedComponent[eachKey]}</div>
+                    })
+                }
+                <br/><br/><br/><br/>
+                {JSON.stringify(form)}
             </Box>
         </Drawer>
   );

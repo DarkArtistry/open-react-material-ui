@@ -2,10 +2,11 @@ import React, { useLayoutEffect, useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd'
 import { ComponentTypes } from '../select-components/cTypes'
 import { nanoid } from '@reduxjs/toolkit'
+import { recursiveRender } from '../utils/components'
 
 function UserApp(props) {
 
-  const { setRoot, components, addComponent, _id } = props
+  const { setRoot, components, addComponent, _id, selectComponent } = props
 
   const drawerWidth = 250
   const accept = [ComponentTypes.BUTTON]
@@ -22,6 +23,11 @@ function UserApp(props) {
       'children': [],
       'droppable': true,
       'draggable': false,
+      'position': 'relative',
+      'height': '100',
+      'heightUnit': 'vh',
+      'minHeight': '100',
+      'minHeightUnit': 'vh',
     })
   },[])
   
@@ -41,13 +47,15 @@ function UserApp(props) {
       console.log('drop motion item!!!!!!!!!!!!!!!!:' , item)
       console.log('drop motion monitor getDropResult:' , monitor.getDropResult())
       console.log('ID : ', _id);
-      const dataConstruct = {
-        parentId: _id, // the id of this component
-        parentName: 'root',
-        parentType: 'root',
-        ...item
+      if (!item.isRendered) {
+        const dataConstruct = {
+          parentId: _id, // the id of this component
+          parentName: 'root',
+          parentType: 'root',
+          ...item
+        }
+        addComponent(dataConstruct)
       }
-      addComponent(dataConstruct)
     },
     canDrop: (item, monitor) => {
       const targetItem = monitor.getItem()
@@ -57,15 +65,25 @@ function UserApp(props) {
 
   return (
     <main 
-      style={{ marginLeft: drawerWidth, marginRight: drawerWidth }}
+      style={{ marginLeft: drawerWidth, width: window.innerWidth - drawerWidth - 350 }} // 35 0is width of right drawer
     >
-         <div 
-            style={{minHeight: '100vh'}}
+         <div
+            style={{
+              minHeight: (components && components.root && components.root.minHeight + components.root.minHeightUnit) || '100vh',
+              border: isOver ? 'dashed' : '',
+              position: (components && components.root && components.root.position) || ''
+            }}
+            onClick={()=> {
+              selectComponent(components.root)}
+            }
             ref={drop}
          >
-           {JSON.stringify(components)}
+           {components && components.root && components.root.children && components.root.children.map((singleComponentId) => {
+              // render component recursively
+              console.log('run recursiveRender');
+              return recursiveRender(components[singleComponentId])
+           })}
            <br/><br/>
-           {`${components && Object.keys(components).length}`}
          </div>
     </main>
   );

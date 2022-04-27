@@ -1,6 +1,6 @@
 import { nanoid } from '@reduxjs/toolkit'
 import LeftDrawer from './LeftDrawer.js'
-import RightDrawer from './RightDrawer.js'
+import RightDrawer from '../containers/RightDrawer.js'
 import UserApp from '../containers/UserApp.js'
 
 function App() {
