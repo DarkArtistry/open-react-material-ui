@@ -9,7 +9,7 @@ function UserApp(props) {
   const { setRoot, components, addComponent, _id, selectComponent } = props
 
   const drawerWidth = 250
-  const accept = [ComponentTypes.BUTTON]
+  const accept = [ComponentTypes.BUTTON, ComponentTypes.GRIDCONTAINER, ComponentTypes.PAPER, ComponentTypes.TYPOGRAPHY]
   const [type, setType] = useState("root");
   const [name, setName] = useState("root");
 
@@ -39,15 +39,16 @@ function UserApp(props) {
       console.log('UserApp monitor: ', monitor)
       console.log('UserApp monitor dropProps: ', dropProps)
       return ({
-        isOver: !!monitor.isOver(),
+        isOver: !!monitor.isOver({ shallow: true }),
         canDrop: !!monitor.canDrop(),
       })
     },
     drop: (item, monitor) => {
-      console.log('drop motion item!!!!!!!!!!!!!!!!:' , item)
-      console.log('drop motion monitor getDropResult:' , monitor.getDropResult())
-      console.log('ID : ', _id);
-      if (!item.isRendered) {
+      // console.log('drop motion item!!!!!!!!!!!!!!!!:' , item)
+      // console.log('drop motion monitor getDropResult:' , monitor.getDropResult())
+      // console.log('ID : ', _id);
+      const dragIsOverThis = monitor.isOver({ shallow: true })
+      if (!item.isRendered && dragIsOverThis) {
         const dataConstruct = {
           parentId: _id, // the id of this component
           parentName: 'root',
@@ -74,13 +75,12 @@ function UserApp(props) {
               position: (components && components.root && components.root.position) || ''
             }}
             onClick={()=> {
-              // selectComponent(components.root)
+              selectComponent({})
             }}
             ref={drop}
          >
            {components && components.root && components.root.children && components.root.children.map((singleComponentId) => {
               // render component recursively
-              console.log('run recursiveRender');
               return recursiveRender(components[singleComponentId])
            })}
            <br/><br/>

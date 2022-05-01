@@ -77,6 +77,7 @@ const RightDrawer = (props) => {
             >
                 <Toolbar>Toolbox</Toolbar>
                 <Divider />
+                
                 {
                     form && Object.keys(form).map((eachKey)=> {
                         console.log('eachKey : ', eachKey);
@@ -94,7 +95,16 @@ const RightDrawer = (props) => {
                         return <div key={eachKey}>
                             <ListItem button onClick={() => { handleFormCollapse(eachKey) }}>
                                 <ListItemText >
-                                    <Typography>{capitalizeFirstLetter(eachKey)}</Typography>
+                                    <Typography>
+                                        {capitalizeFirstLetter(eachKey)}
+                                        {
+                                            (eachKey === 'xl' && ' (Extra-Large Screen,  1536+px)') ||
+                                           (eachKey === 'lg' && ' (Large Screen, 1200+px)') ||
+                                           (eachKey === 'md' && ' (Medium Screen, 900+px)') ||
+                                           (eachKey === 'sm' && ' (Small Screen, 600+px)') ||
+                                           (eachKey === 'xs' && ' (Extra-Small Screen, 0+px)')
+                                        }
+                                    </Typography>
                                 </ListItemText>
                                 {formDisplay && (formDisplay.includes(eachKey) ? <ExpandMoreIcon /> : <ExpandLessIcon />)}
                             </ListItem>
@@ -119,7 +129,17 @@ const RightDrawer = (props) => {
                                                 eachKey === 'fullWidth' ||
                                                 eachKey === 'color' ||
                                                 eachKey === 'fullWidth' ||
-                                                eachKey === 'disabled'
+                                                eachKey === 'disabled' || 
+                                                eachKey === 'columns' ||
+                                                eachKey === 'direction' ||
+                                                eachKey === 'justifyContent' ||
+                                                eachKey === 'alignItems' ||
+                                                eachKey === 'spacing' ||
+                                                eachKey === 'lg' ||
+                                                eachKey === 'md' ||
+                                                eachKey === 'sm' ||
+                                                eachKey === 'xl' ||
+                                                eachKey === 'xs'
                                             ) && (
                                             <FormControl fullWidth>
                                                 <Select
@@ -143,6 +163,7 @@ const RightDrawer = (props) => {
                                                 eachKey === 'minHeight' || 
                                                 eachKey === 'width' || 
                                                 eachKey === 'minWidth' ||
+                                                eachKey === 'maxWidth' ||
                                                 eachKey === 'left' ||
                                                 eachKey === 'right' ||
                                                 eachKey === 'top' ||
@@ -156,12 +177,14 @@ const RightDrawer = (props) => {
                                                         if (
                                                             eachOption === 'height' || 
                                                             eachOption === 'width' ||
+                                                            eachOption === 'maxWidth' ||
                                                             eachOption === 'left' ||
                                                             eachOption === 'right' ||
                                                             eachOption === 'top' ||
                                                             eachOption === 'bottom' ||
                                                             eachOption === 'margin' ||
-                                                            eachOption === 'padding'
+                                                            eachOption === 'padding' ||
+                                                            eachOption === 'minHeight'
                                                         ) {
                                                             return <TextField
                                                                 key={eachOption}
@@ -215,10 +238,77 @@ const RightDrawer = (props) => {
                                                     })
                                                 }
                                                 {eachKey === 'children' && <Box sx={{fontSize: '13px', }}>{`Component's inner text`}</Box>}
-                                                {eachKey === 'href' && <Box sx={{fontSize: '13px', }}>{`${(form && form.href && form.href.hint)}`}</Box>}
+                                                {eachKey === 'href' && <Box sx={{fontSize: '13px', whiteSpace: 'pre-line' }}>{(form && form.href && form.href.hint)}</Box>}
                                             </FormControl>)
                                         }
-                                        {/* CUSTOMIZED COLOR */}
+                                        {/* BACKGROUND */}
+                                        {
+                                            (
+                                                eachKey === 'background'
+                                            ) &&  (
+                                                    form && form[eachKey] && Object.keys(form[eachKey]).map((eachOption, index) => {
+                                                        if (
+                                                            eachOption === 'backgroundImage'
+                                                        ) {
+                                                            return <FormControl fullWidth><TextField 
+                                                                fullWidth
+                                                                sx={{marginBottom: '10px'}}
+                                                                label={eachOption}
+                                                                value={(selectedComponent && selectedComponent[eachOption]) || ""}
+                                                                onChange={(ev) => {
+                                                                    handleFormChange(eachOption, ev.target.value)
+                                                                }}
+                                                                placeholder={'image web address'}
+                                                            /></FormControl>
+                                                        } else if (
+                                                            eachOption === 'backgroundRepeat' ||
+                                                            eachOption === 'backgroundPosition' ||
+                                                            eachOption === 'backgroundSize'
+                                                        ) {
+                                                            const listOptions = form[eachKey][eachOption]
+                                                            return <FormControl fullWidth><Select
+                                                                sx={{marginBottom: '10px'}}
+                                                                key={eachOption}
+                                                                value={(selectedComponent && selectedComponent[eachOption]) || ""} 
+                                                                onChange={(ev) => {
+                                                                    handleFormChange(eachOption, ev.target.value)
+                                                                }}
+                                                            >
+                                                                {
+                                                                    listOptions && listOptions.map((eachListOption) => {
+                                                                        return <MenuItem key={eachListOption} value={eachListOption}>{eachListOption}</MenuItem>
+                                                                    })
+                                                                }
+                                                            </Select></FormControl>
+                                                        }
+                                                        // backgroundColor
+                                                        return <div key={eachOption}>
+                                                            <FormControl fullWidth>
+                                                            <TextField 
+                                                                fullWidth
+                                                                sx={{marginBottom: '10px'}}
+                                                                label={eachOption}
+                                                                value={(selectedComponent && selectedComponent[eachOption]) || ""}
+                                                                onChange={(ev) => {
+                                                                    handleFormChange(eachOption, ev.target.value)
+                                                                }}
+                                                            />
+                                                            <HexColorPicker
+                                                                style={{
+                                                                    marginBottom: '10px',
+                                                                    width: '100%'
+                                                                }}
+                                                                color={(selectedComponent && selectedComponent[eachOption]) || ""}
+                                                                onChange={(colorSelected) => {
+                                                                    handleFormChange(eachOption, colorSelected)
+                                                                }}
+                                                            />
+                                                            </FormControl>
+                                                        </div>
+                                                    })
+                                                )
+                                        }
+                                        {/* CUSTOMISED COLOR */}
                                         {
                                             (
                                                 eachKey === 'customisedColor'

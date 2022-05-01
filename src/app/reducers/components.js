@@ -18,7 +18,7 @@ function components(state ={}, action) {
           addComponentState[addComponentData.id] = addComponentData
           // add children into component's parent AND ensure that it is not an INFINITE LOOP
           if (addComponentData.parentId) {
-            // Inifite loop check
+            // Inifite loop check, incomplete
             if (addComponentData.children && addComponentData.children.includes(addComponentData.parentId)) {
               console.log('INFINITE LOOP DETECTED');
               return {
@@ -46,6 +46,7 @@ function components(state ={}, action) {
             selectedComponent: action.data ? JSON.parse(JSON.stringify(action.data)) : {}
           }
         case 'UPDATE_SELECTED_COMPONENT':
+          console.log('UPDATE_SELECTED_COMPONENT!!!!!!!!!!!!!!');
           let componentToUpdate = action.data ? JSON.parse(JSON.stringify(action.data)) : {}
           let updateComponentState = JSON.parse(JSON.stringify(state.components))
           updateComponentState[componentToUpdate.id] = componentToUpdate

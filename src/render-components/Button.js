@@ -11,7 +11,7 @@ const MaterialBtn = (props) => {
     const { 
         _id, type, variant, size, href, fullWidth, endIconType, startIconType,
         disableRipple, color, children, disabled, 
-        droppable, draggable, isSelected, isHovered, rootParentType, 
+        droppable, draggable, isSelected, isHovered, rootParentType, parentId,
         position, display, float, height, heightUnit, left, leftUnit, 
         right, rightUnit, top, topUnit, bottom, bottomUnit, margin, marginUnit, padding, paddingUnit,
         customisedColor,
@@ -59,7 +59,8 @@ const MaterialBtn = (props) => {
             'isSelected': isSelected, // this is to show up on the toobox, right drawer and possibly show some css changes
             'isHovered': isHovered, // possibly show some css changes
             'rootParentType': rootParentType,
-            'isRendered': true
+            'isRendered': true,
+            'parentId': parentId,
         },
         collect: monitor => {
             console.log('button monitor: ', monitor);
@@ -68,7 +69,7 @@ const MaterialBtn = (props) => {
             })
         },
         end: (item, monitor) => {
-            console.log('drag end item: ', item);
+            console.log('!!!!!!!!!!!! drag end item: ', item);
             console.log('drag end monitor.didDrop(): ', monitor.didDrop());
             console.log('drag end monitorDropResult: ', monitor.getDropResult());
         }
@@ -149,6 +150,32 @@ const MaterialBtn = (props) => {
                     color: color,
                     children: children,
                     disabled:  disabled,
+                    // css props
+                    position: position,
+                    display: display,
+                    float: float,
+                    height: height,
+                    heightUnit: heightUnit,
+                    left: left,
+                    leftUnit: leftUnit,
+                    right: right,
+                    rightUnit: rightUnit,
+                    top: top,
+                    topUnit: topUnit,
+                    bottom: bottom,
+                    bottomUnit: bottomUnit,
+                    margin: margin,
+                    marginUnit: marginUnit,
+                    padding: padding,
+                    paddingUnit: paddingUnit,
+                    customisedColor: customisedColor,
+                    // notice that those stringified keys are the ones we make use of, while those above are the material-ui props for buttons
+                    'droppable': droppable,
+                    'draggable': draggable,
+                    'isSelected': isSelected, // this is to show up on the toobox, right drawer and possibly show some css changes
+                    'isHovered': isHovered, // possibly show some css changes
+                    'rootParentType': rootParentType,
+                    'isRendered': true
                 })
             }}
         >{children || "Button"}</Button>)
