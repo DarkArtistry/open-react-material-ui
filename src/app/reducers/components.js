@@ -6,6 +6,8 @@ function components(state ={}, action) {
           let init_root = {}
           const setRootComponentState = state.components ? JSON.parse(JSON.stringify(action.data)) : {}
           init_root[setRootComponentState ? setRootComponentState.id : 'root'] = setRootComponentState
+          console.log('setRootComponentState : ', setRootComponentState);
+          console.log('init_root : ', init_root);
         return {
           ...state,
           components: init_root
@@ -25,6 +27,7 @@ function components(state ={}, action) {
                 ...state
               }
             }
+            console.log('addComponentState: ', addComponentState);
             if(addComponentState[addComponentData.parentId].children) {
               console.log('have children');
               addComponentState[addComponentData.parentId].children.push(addComponentData.id)

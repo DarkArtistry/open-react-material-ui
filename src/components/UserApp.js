@@ -14,8 +14,9 @@ function UserApp(props) {
   const [name, setName] = useState("root");
 
   useEffect(()=> {
+    console.log('firing setRoot');
     setRoot({
-      'id': _id,
+      'id': 'root',
       'parentId': null,
       'parentName': null,
       'rootParentType': null, // I'll use this to check the required parent type, if there's any
@@ -29,7 +30,7 @@ function UserApp(props) {
       'minHeight': '100',
       'minHeightUnit': 'vh',
     })
-  },[])
+  },[setRoot])
   
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: accept,
