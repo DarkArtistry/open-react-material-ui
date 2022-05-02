@@ -7,6 +7,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+### Demo
+
+[Live Demo](https://open-react-material-ui.web.app/)
+
 ### Objectives
 
 Users will be able to drag and drop material components on the left drawer to the dropzone (middle/user layout), and use the toolbox on the right drawer to edit the CSS of individual components in the dropzone. Finally with a click of the button, the platform will generate react/ react-material-ui code and also have the capability convert the xml structure to a json for various device purposes. Also, possibly becoming a library for people who want to build no code platforms.
@@ -77,3 +81,9 @@ Instead we will need to handle the rendering of the component in a seperate logi
 - Let's progress with using [react-dnd](https://react-dnd.github.io/react-dnd/about)  AND make use of redux, global store, to store our JSON Tree Data. The JSON Tree Data will be used to render the elements recursively.
 - This is the react way of working, it is much cleaner and it easily constructs the tree, saving our hassle to query the DOM document and messing with classes and ids. Now we just have to render recusively. :)
 
+### Phase 2
+
+### Changelog
+- Added Grid Container, Grid Item, Typography
+- Added Preview Button
+- Minor bug fixes for nested drag and drops
