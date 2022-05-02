@@ -75,7 +75,7 @@ const MaterialBtn = (props) => {
             console.log('drag end monitor.didDrop(): ', monitor.didDrop());
             console.log('drag end monitorDropResult: ', monitor.getDropResult());
         }
-      }))
+      }),[props])
 
     return (
         isDragging ? (
