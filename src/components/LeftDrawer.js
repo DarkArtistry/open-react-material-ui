@@ -8,6 +8,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import MaterialBtn from '../select-components/Button';
 import MaterialGrid from '../select-components/Grid';
+import MaterialTypography from '../select-components/Typography';
 import { nanoid } from '@reduxjs/toolkit'
 
 const LeftDrawer = () => {
@@ -35,6 +36,9 @@ const LeftDrawer = () => {
                         </ListItem>
                         <ListItem>
                             <MaterialGrid _id={nanoid()} container={false} item={true}/>
+                        </ListItem>
+                        <ListItem>
+                            <MaterialTypography _id={nanoid()}/>
                         </ListItem>
                     </List>
                 </Box>

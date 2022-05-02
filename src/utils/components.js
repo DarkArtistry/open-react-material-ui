@@ -1,5 +1,6 @@
 import MaterialBtn from '../render-components/Button'
 import MaterialGrid from '../render-components/Grid'
+import MaterialTypography from '../render-components/Typography'
 import { ComponentTypes } from '../select-components/cTypes'
 
 // cssForms returns an object representing the form structure for a particular component
@@ -125,6 +126,57 @@ export const cssForms = (component) => {
                 },
                 disabled: [true, false],
             }
+        case ComponentTypes.TYPOGRAPHY:
+            return {
+                position: ['relative', 'absolute'],
+                display: ['block', 'inline', 'inline-block', 'none'],
+                float: ['left', 'right', 'none'],
+                height: {
+                    height: '',
+                    heightUnit: ['vh', '%', 'em', 'px', 'vw', 'rem']
+                },
+                width: {
+                    width: '',
+                    widthUnit: ['vh', '%', 'em', 'px', 'vw', 'rem']
+                },
+                left: {
+                    left: '',
+                    leftUnit: ['vh', '%', 'em', 'px', 'vw', 'rem']
+                },
+                right: {
+                    right: '',
+                    rightUnit: ['vh', '%', 'em', 'px', 'vw', 'rem']
+                },
+                top: {
+                    top: '',
+                    topUnit: ['vh', '%', 'em', 'px', 'vw', 'rem']
+                },
+                bottom: {
+                    bottom: '',
+                    bottomUnit: ['vh', '%', 'em', 'px', 'vw', 'rem']
+                },
+                margin: {
+                    margin: '',
+                    marginUnit: ['vh', '%', 'em', 'px', 'vw', 'rem']
+                },
+                letterSpacing: {
+                    letterSpacing: '',
+                    letterSpacingUnit: ['vh', '%', 'em', 'px', 'vw', 'rem']
+                },
+                fontFamily: ["Roboto", 'Helvetica', 'Arial', 'Sans-Serif', 'Cursive', 'Initial', 'Monospace', 'Times New Roman', 'Verdana', 'Tahoma', 'rebuchet MS', 'Georgia', 'Garamond', 'Courier New', 'Brush Script MT'],
+                align: ['center','inherit', 'justify', 'left', 'right'],
+                children: {
+                    children: ''
+                },
+                gutterBottom: [true, false],
+                paragraph: [true, false],
+                variant: ['body1','body2','button','caption','h1','h2','h3','h4','h5','h6', 'inherit','overline','subtitle1','subtitle2'],
+                color: ['inherit', 'primary', 'secondary', 'success','error', 'info', 'warning', 'customise'],
+                customisedColor: {
+                    backgroundColor: '',
+                    color: ''
+                },
+            }
         default:
             return {
                 // position: ['relative', 'absolute'],
@@ -147,6 +199,50 @@ export const recursiveRender = (component) => {
     console.log('recursiveRender: component');
     console.log(component);
     switch (component.type) {
+        case ComponentTypes.TYPOGRAPHY:
+            // button children is the string content
+            // button does not have nested children thus it will end here
+            return <MaterialTypography
+                // below for react material ui props
+                key={component.id}
+                _id={component.id}
+                type={component.type}
+                align={component.align}
+                children={component.children}
+                gutterBottom={component.gutterBottom}
+                paragraph={component.paragraph}
+                variant={component.variant}
+                color={component.color}
+                // below for css
+                position={component.position}
+                display={component.display}
+                float={component.float}
+                height={component.height}
+                heightUnit={component.heightUnit}
+                width={component.width}
+                widthUnit={component.widthUnit}
+                left={component.left}
+                leftUnit={component.leftUnit}
+                right={component.right}
+                rightUnit={component.rightUnit}
+                top={component.top}
+                topUnit={component.topUnit}
+                bottom={component.bottom}
+                bottomUnit={component.bottomUnit}
+                margin={component.margin}
+                marginUnit={component.marginUnit}
+                customisedColor={component.customisedColor}
+                letterSpacing={component.letterSpacing}
+                letterSpacingUnit={component.letterSpacingUnit}
+                fontFamily={component.fontFamily}
+                // below for state management
+                droppable={component.droppable} // have not used
+                draggable={component.draggable} // have not used
+                isSelected={component.isSelected} // have not used
+                isHovered={component.isHovered} // have not used
+                rootParentType={component.rootParentType} // have not used
+                parentId={component.parentId} // used
+            />
         case ComponentTypes.BUTTON:
             // button children is the string content
             // button does not have nested children thus it will end here
@@ -190,6 +286,7 @@ export const recursiveRender = (component) => {
                 isSelected={component.isSelected} // have not used
                 isHovered={component.isHovered} // have not used
                 rootParentType={component.rootParentType} // have not used
+                parentId={component.parentId} // used
             />
         case ComponentTypes.GRIDCONTAINER:
             return <MaterialGrid
@@ -234,6 +331,7 @@ export const recursiveRender = (component) => {
                 isSelected={component.isSelected} // have not used
                 isHovered={component.isHovered} // have not used
                 rootParentType={component.rootParentType} // have not used
+                parentId={component.parentId} // used
             />
         case ComponentTypes.GRIDITEM:
             return <MaterialGrid
@@ -269,6 +367,7 @@ export const recursiveRender = (component) => {
                 isSelected={component.isSelected} // have not used
                 isHovered={component.isHovered} // have not used
                 rootParentType={component.rootParentType} // have not used
+                parentId={component.parentId} // used
             />
         default:
             break;

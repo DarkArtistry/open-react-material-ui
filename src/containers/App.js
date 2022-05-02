@@ -4,7 +4,7 @@ import { } from '../actions'
 import App from '../components/App'
 
 const mapStateToProps = state => ({
-    // openDrawer: state.navDrawers.isOpen,
+    preview: state.app.preview,
 })
   
 const mapDispatchToProps = dispatch => ({

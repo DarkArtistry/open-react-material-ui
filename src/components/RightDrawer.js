@@ -32,7 +32,7 @@ import { cssForms } from '../utils/components'
 
 
 const RightDrawer = (props) => {
-    const { selectedComponent, updateSelectedComponent } = props
+    const { selectedComponent, updateSelectedComponent, preview } = props
     const drawerWidth = 350
     const [form, setForm] = useState({});
     const [formDisplay, setFormDisplay] = useState([]);
@@ -52,6 +52,7 @@ const RightDrawer = (props) => {
     const handleFormChange = (field, value) => {
         let currentSelectedComponent = JSON.parse(JSON.stringify(selectedComponent))
         currentSelectedComponent[field] = value
+        console.log('NEW currentSelectedComponent ', currentSelectedComponent);
         updateSelectedComponent(currentSelectedComponent)
     }
 
@@ -65,6 +66,7 @@ const RightDrawer = (props) => {
             setForm(componentForm)
         }
       },[(selectedComponent && selectedComponent.id) || ""])
+
   return (
         <Drawer
             anchor={'right'}
@@ -139,7 +141,11 @@ const RightDrawer = (props) => {
                                                 eachKey === 'md' ||
                                                 eachKey === 'sm' ||
                                                 eachKey === 'xl' ||
-                                                eachKey === 'xs'
+                                                eachKey === 'xs' ||
+                                                eachKey === 'align' ||
+                                                eachKey === 'gutterBottom' ||
+                                                eachKey === 'paragraph' ||
+                                                eachKey === 'fontFamily'
                                             ) && (
                                             <FormControl fullWidth>
                                                 <Select
@@ -169,7 +175,8 @@ const RightDrawer = (props) => {
                                                 eachKey === 'top' ||
                                                 eachKey === 'bottom' ||
                                                 eachKey === 'margin' ||
-                                                eachKey === 'padding'
+                                                eachKey === 'padding' ||
+                                                eachKey === 'letterSpacing'
                                             ) && (
                                             <FormControl fullWidth>
                                                 {
@@ -184,7 +191,8 @@ const RightDrawer = (props) => {
                                                             eachOption === 'bottom' ||
                                                             eachOption === 'margin' ||
                                                             eachOption === 'padding' ||
-                                                            eachOption === 'minHeight'
+                                                            eachOption === 'minHeight' ||
+                                                            eachOption === 'letterSpacing' 
                                                         ) {
                                                             return <TextField
                                                                 key={eachOption}

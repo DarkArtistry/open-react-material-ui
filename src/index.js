@@ -9,7 +9,7 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const store = configureStore({ components: {} })
+const store = configureStore({ components: {}, app: { preview: false} })
 root.render(
   <React.StrictMode>
       <Provider store={store}>

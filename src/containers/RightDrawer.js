@@ -5,6 +5,7 @@ import RightDrawer from '../components/RightDrawer'
 
 const mapStateToProps = state => ({
     selectedComponent: state.components.selectedComponent,
+    preview: state.app.preview
 })
   
 const mapDispatchToProps = dispatch => ({

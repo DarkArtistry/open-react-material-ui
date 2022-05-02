@@ -4,7 +4,7 @@ import { Grid } from '@mui/material';
 import { useDrag, useDrop } from 'react-dnd'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { grey, green, lightBlue } from '@mui/material/colors';
-import { selectComponent, addComponent } from '../actions'
+import { selectComponent, addComponent, updateComponent } from '../actions'
 import { ComponentTypes } from '../select-components/cTypes'
 import { recursiveRender } from '../utils/components'
 
@@ -17,14 +17,16 @@ const MaterialGrid = (props) => {
         height, heightUnit, minHeight, minHeightUnit, position,
         margin, marginUnit, padding, paddingUnit, maxWidth, maxWidthUnit,
         backgroundColor, backgroundImage, backgroundRepeat, backgroundPosition, backgroundSize,
-        selectComponent, selectedComponent, addComponent, stateOfComponents
+        selectComponent, selectedComponent, addComponent, updateComponent, stateOfComponents,
+        preview
     } = props
 
     const accept = [ComponentTypes.BUTTON, ComponentTypes.GRIDCONTAINER, ComponentTypes.GRIDITEM, ComponentTypes.PAPER, ComponentTypes.TYPOGRAPHY]
 
     // DRAG
-    const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
+    const [{ isDragging }, drag] = useDrag(() => ({
         type: type,
+        canDrag: preview ? false : true,
         item: {
             // material button props
             type: type,
@@ -69,7 +71,8 @@ const MaterialGrid = (props) => {
             'parentId': parentId
         },
         collect: monitor => {
-            console.log('button monitor: ', monitor);
+            console.log('GRID COLLECT monitor: ', monitor);
+            console.log('GRID COLLECT children : ', children);
             return ({
                 isDragging: !!monitor.isDragging(),
             })
@@ -79,7 +82,8 @@ const MaterialGrid = (props) => {
             console.log('drag end monitor.didDrop(): ', monitor.didDrop());
             console.log('drag end monitorDropResult: ', monitor.getDropResult());
         }
-      }))
+      }),[props])
+        // just as react hooks update the drag component when props update
 
     // DROP
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -101,14 +105,28 @@ const MaterialGrid = (props) => {
             // This is suppose to help drag and shift positions, tbc
             // if (!item.isRendered) {
             const dragIsOverThis = monitor.isOver({ shallow: true })
-            if (dragIsOverThis) {
+            console.log('dragIsOverThis : ', dragIsOverThis);
+            console.log('item.isRendered : ', item.isRendered);
+            if (dragIsOverThis && !item.isRendered) {
+                // add component
+                console.log('is over and item is not rendered, its from select, add component!');
                 const dataConstruct = {
+                    ...item,
                     parentId: _id, // the id of this component
                     parentName: container ? 'gridContainer' : 'gridItem',
                     parentType: container ? 'gridContainer' : 'gridItem',
-                    ...item
                 }
                 addComponent(dataConstruct)
+            } else if (dragIsOverThis && item.isRendered) {
+                console.log('item <<<<<<<< >>>>>>>>>>', item);
+                // update component
+                const dataConstruct = {
+                    ...item,
+                    parentId: _id, // the id of this component
+                    parentName: container ? 'gridContainer' : 'gridItem',
+                    parentType: container ? 'gridContainer' : 'gridItem',
+                }
+                updateComponent(dataConstruct)
             }
             //  }
         },
@@ -116,32 +134,15 @@ const MaterialGrid = (props) => {
           const targetItem = monitor.getItem()
           return accept.indexOf(targetItem.type) > -1
         },
-      }))
-
+      }),[props])
+      // just as react hooks update the drag component when props update
     return (
         isDragging ? (
-        <Grid
-            ref={dragPreview}
-            style={{
-                opacity: 0.5,
-                cursor: 'move',
-                justifyContent: 'start',
-                maxWidth: `${maxWidth + maxWidthUnit}`,
-                minHeight: `${minHeight + minHeightUnit}`,
-                height: `${height + heightUnit}`,
-                margin: `${margin + marginUnit}`,
-                padding: `${padding + paddingUnit}`,
-                position: position,
-            }}
-            // endIcon={endIconType}
-            // startIcon={startIconType}
-        >
-            {/* {children && children.map((child) => child)} */}
-        </Grid>) : (<Grid
+        null) : (<Grid
             ref={(node) => drag(drop(node))}
             style={{
                 opacity: 1,
-                border: `dashed ${grey[300]}`,
+                border: preview ? '' : `dashed ${grey[300]}`,
                 cursor: 'move',
                 minHeight: `${minHeight + minHeightUnit}`,
                 height: `${height + heightUnit}`,
@@ -154,6 +155,7 @@ const MaterialGrid = (props) => {
                 backgroundRepeat: backgroundRepeat,
                 backgroundPosition: backgroundPosition,
                 backgroundSize: backgroundSize,
+                position: position,
             }}
             justifyContent={justifyContent}
             alignItems={alignItems}
@@ -167,8 +169,10 @@ const MaterialGrid = (props) => {
             sm={sm}
             xl={xl}
             xs={xs}
+            children={children}
             onClick={(ev)=> {
                 ev.stopPropagation();
+                if (preview) return
                 selectComponent({
                     type: type,
                     id: _id,
@@ -186,6 +190,7 @@ const MaterialGrid = (props) => {
                     backgroundRepeat: backgroundRepeat,
                     backgroundPosition: backgroundPosition,
                     backgroundSize: backgroundSize,
+                    position: position,
                     // component props
                     justifyContent: justifyContent,
                     alignItems: alignItems,
@@ -206,7 +211,8 @@ const MaterialGrid = (props) => {
                     'isSelected': isSelected, // this is to show up on the toobox, right drawer and possibly show some css changes
                     'isHovered': isHovered, // possibly show some css changes
                     'rootParentType': rootParentType,
-                    'isRendered': true
+                    'isRendered': true,
+                    'parentId': parentId
                 })
             }}
         >
@@ -220,12 +226,14 @@ const MaterialGrid = (props) => {
 
 const mapStateToProps = state => ({
     selectedComponent: state.components.selectedComponent,
-    stateOfComponents: state.components.components
+    stateOfComponents: state.components.components,
+    preview: state.app.preview,
 })
   
 const mapDispatchToProps = dispatch => ({
     selectComponent: (data) => dispatch(selectComponent(data)),
     addComponent: (data) => dispatch(addComponent(data)),
+    updateComponent: (data) => dispatch(updateComponent(data)),
 })
 
 export default connect(

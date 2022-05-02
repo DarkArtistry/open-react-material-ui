@@ -4,9 +4,9 @@ function components(state ={}, action) {
     switch (action.type) {
       case 'SET_ROOT_COMPONENT':
           let init_root = {}
-          const setRootComponentState = state.components ? JSON.parse(JSON.stringify(action.data)) : {}
-          init_root[setRootComponentState ? setRootComponentState.id : 'root'] = setRootComponentState
+          const setRootComponentState = JSON.parse(JSON.stringify(action.data))
           console.log('setRootComponentState : ', setRootComponentState);
+          init_root[setRootComponentState ? setRootComponentState.id : 'root'] = setRootComponentState
           console.log('init_root : ', init_root);
         return {
           ...state,
@@ -15,6 +15,7 @@ function components(state ={}, action) {
         case 'ADD_COMPONENT':
           let addComponentState = JSON.parse(JSON.stringify(state.components))
           let addComponentData = action.data ? JSON.parse(JSON.stringify(action.data)) : {}
+          console.log('addComponentData : ', addComponentData);
           // add component into state components
           addComponentData.id = nanoid() // generates new id
           addComponentState[addComponentData.id] = addComponentData
@@ -38,10 +39,43 @@ function components(state ={}, action) {
           }
           console.log('ADDING COMPONENT2');
           console.log(addComponentState);
-        return {
-          ...state,
-          components: addComponentState
-        }
+          return {
+            ...state,
+            components: addComponentState
+          }
+        case 'UPDATE_COMPONENT':
+          console.log('~@#~#~!@#!@!@#!@# UPDATE COMPONENT');
+          let updateComponentState = JSON.parse(JSON.stringify(state.components))
+          console.log('updateComponentState : ', updateComponentState);
+          let updateComponentData = action.data ? JSON.parse(JSON.stringify(action.data)) : {}
+          console.log('updateComponentData : ', updateComponentData);
+          const oldComponentData = updateComponentState[updateComponentData.id]
+          console.log('oldComponentData : ', oldComponentData);
+          const oldComponentParentId = oldComponentData.parentId || ""
+          const newComponentParentId = updateComponentData.parentId
+          updateComponentState[updateComponentData.id] = updateComponentData
+          console.log('oldComponentParentId @@@@@ : ', oldComponentParentId);
+          console.log('newComponentParentId @@@@@: ', newComponentParentId);
+          // update old parent to remove child
+          if(updateComponentState[oldComponentParentId]) {
+            console.log('OLD PARENT1 : ', updateComponentState[oldComponentParentId]);
+            updateComponentState[oldComponentParentId].children = updateComponentState[oldComponentParentId].children.filter((childId) => {
+              return childId !== updateComponentData.id
+            })
+            console.log('OLD PARENT2 : ', updateComponentState[oldComponentParentId]);
+          }
+          // update new parent
+          if(updateComponentState[newComponentParentId]) {
+            console.log('NEW PARENT1 : ', updateComponentState[newComponentParentId]);
+            updateComponentState[newComponentParentId].children.push(updateComponentData.id)
+            console.log('NEW PARENT2 : ', updateComponentState[newComponentParentId]);
+          }
+          // update component
+          updateComponentState[updateComponentData.id] = {...oldComponentData,...updateComponentData}
+          return {
+            ...state,
+            components: updateComponentState
+          }
         case 'SELECT_COMPONENT':
           console.log('selectedComponent : ', action.data);
           return {
@@ -51,14 +85,14 @@ function components(state ={}, action) {
         case 'UPDATE_SELECTED_COMPONENT':
           console.log('UPDATE_SELECTED_COMPONENT!!!!!!!!!!!!!!');
           let componentToUpdate = action.data ? JSON.parse(JSON.stringify(action.data)) : {}
-          let updateComponentState = JSON.parse(JSON.stringify(state.components))
-          updateComponentState[componentToUpdate.id] = componentToUpdate
+          let updateSelectedComponentState = JSON.parse(JSON.stringify(state.components))
+          updateSelectedComponentState[componentToUpdate.id] = componentToUpdate
           console.log('componentToUpdate :', componentToUpdate);
           console.log('selectedComponent :', state.selectedComponent);
           return {
             ...state,
             selectedComponent: componentToUpdate,
-            components: updateComponentState
+            components: updateSelectedComponentState
           }
       default:
         return state
