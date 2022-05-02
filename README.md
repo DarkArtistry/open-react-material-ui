@@ -83,7 +83,11 @@ Instead we will need to handle the rendering of the component in a seperate logi
 
 ### Phase 2
 
-### Changelog
+#### Changelog
 - Added Grid Container, Grid Item, Typography
 - Added Preview Button
 - Minor bug fixes for nested drag and drops
+
+#### Results
+
+![Phase 2](https://i.imgur.com/WFbmy6u.gif "Phase 2")
