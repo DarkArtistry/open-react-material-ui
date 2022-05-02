@@ -15,11 +15,13 @@ const MaterialBtn = (props) => {
         position, display, float, height, heightUnit, left, leftUnit, 
         right, rightUnit, top, topUnit, bottom, bottomUnit, margin, marginUnit, padding, paddingUnit,
         customisedColor,
-        selectComponent, selectedComponent
+        selectComponent, selectedComponent,
+        preview
     } = props
 
     const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
         type: type,
+        canDrag: preview ? false : true,
         item: {
             // material button props
             type: type,
@@ -109,6 +111,7 @@ const MaterialBtn = (props) => {
             disabled={disabled}
             onClick={(ev)=> {
                 ev.stopPropagation();
+                if (preview) return
                 selectComponent({
                     type: type,
                     id: _id,
@@ -157,6 +160,7 @@ const MaterialBtn = (props) => {
 
 const mapStateToProps = state => ({
     selectedComponent: state.components.selectedComponent,
+    preview: state.app.preview,
 })
   
 const mapDispatchToProps = dispatch => ({
